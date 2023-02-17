@@ -6,9 +6,9 @@
 :- [tictactoe].
 
 
-	/****************************************************
+	/* ***************************************************
   	ALGORITHME MINMAX avec convention NEGAMAX : negamax/5
-  	*****************************************************/
+  	**************************************************** */
 
 	/*
 	negamax(+J, +Etat, +P, +Pmax, [?Coup, ?Val])
@@ -57,11 +57,25 @@ A FAIRE : ECRIRE ici les clauses de negamax/5
 .....................................
 	*/
 
+negamax(J, Etat, Pmax, Pmax, [[], Val]):-
+    %print("P = Pmax"),
+    heuristique(J,Etat,Val), !.
+negamax(J, Etat, _, _, [[], Val]):-
+    successeurs(J,Etat,[]),
+    print("Pas de succeseurs"),
+    heuristique(J,Etat,Val),!.
+negamax(J, Etat, P, Pmax, [Coup, V2]):-
+    print("ALED"),
+    successeurs(J,Etat,Succs),
+    %print(Succs),
+    loop_negamax(J,P,Pmax,Succs,Val_Succs),
+    meilleur(Val_Succs,[Coup,V1]),
+    V2 is -V1,!.
 
-	/*******************************************
+	/* ******************************************
 	 DEVELOPPEMENT D'UNE SITUATION NON TERMINALE
 	 successeurs/3 
-	 *******************************************/
+	 ****************************************** */
 
 	 /*
    	 successeurs(+J,+Etat, ?Succ)
@@ -76,10 +90,11 @@ successeurs(J,Etat,Succ) :-
 		    successeur(J,Etat_Suiv,Coup),
 		    Succ).
 
-	/*************************************
+
+	/* ************************************
          Boucle permettant d'appliquer negamax 
          a chaque situation suivante :
-	*************************************/
+	************************************ */
 
 	/*
 	loop_negamax(+J,+P,+Pmax,+Successeurs,?Liste_Couples)
@@ -101,10 +116,10 @@ A FAIRE : commenter chaque litteral de la 2eme clause de loop_negamax/5,
 	litteral ?
 	*/
 
-	/*********************************
+	/* ********************************
 	 Selection du couple qui a la plus
 	 petite valeur V 
-	 *********************************/
+	 ******************************** */
 
 	/*
 	meilleur(+Liste_de_Couples, ?Meilleur_Couple)
@@ -120,20 +135,27 @@ A FAIRE : ECRIRE ici les clauses de meilleur/2
 	*/
 
 
-
-	/******************
+meilleur([X],X):- !.
+meilleur([[Coup,Valeur]|Reste],[Coup,Valeur]):-
+    meilleur(Reste,[_,Meilleur_Valeur]),
+    Valeur < Meilleur_Valeur,
+    !.
+meilleur([_|Reste],[Meilleur_Coup,Meilleur_Valeur]):-
+    meilleur(Reste,[Meilleur_Coup,Meilleur_Valeur]).
+	/* *****************
   	PROGRAMME PRINCIPAL
-  	*******************/
+  	****************** */
 
 main(B,V, Pmax) :-
-
-	true.        
+    joueur_initial(J),
+    situation_initiale(Ini),
+    negamax(J,Ini,0, Pmax,[B,V]).
 
 
 	/*
 A FAIRE :
-	Compléter puis tester le programme principal pour plusieurs valeurs de la profondeur maximale.
+	Completer puis tester le programme principal pour plusieurs valeurs de la profondeur maximale.
 	Pmax = 1, 2, 3, 4 ...
-	Commentez les résultats obtenus.
+	Commentez les resultats obtenus.
 	*/
 

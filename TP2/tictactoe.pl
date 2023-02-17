@@ -22,13 +22,9 @@
 	par un nouvel identificateur).
 	*/
 
-coordonnees(Etat,Elem,L,C):-
-    nth1(L,Etat,Ligne),
-    nth1(C,Ligne, Elem).
-
-situation_initiale([ [1,2,3],
-                     [4,5,6],
-                     [7,8,9] ]).
+situation_initiale([ [_,o,o],
+                     [o,_,o],
+                     [o,o,_] ]).
 
 	% Convention (arbitraire) : c'est x qui commence
 
@@ -56,7 +52,7 @@ situation_terminale(_Joueur, Situation) :-
 	************************** */
 
 alignement(L, Matrix):- ligne(    L,Matrix).
-alignement(C, Matrix):- colonne3b(  C,_,Matrix).
+alignement(C, Matrix):- colonne(  C,_,Matrix).
 alignement(D, Matrix):- diagonale(D,Matrix).
 
 	/* *******************************************
@@ -67,26 +63,10 @@ alignement(D, Matrix):- diagonale(D,Matrix).
 ligne(L, Matrix):-
    nth1(_,Matrix,L).
 
-colonne([],_,_).
-colonne(C,Index,Matrix) :-
-    nth1(_,Matrix,Lig),
-    nth1(Index,Lig,X),
-    colonne(Cint,Index,Matrix),
-    append(Cint,[X],C).
-
-colonne2([],0,_).
-colonne2(C,N,Matrix):-
-     append(C_Suiv,[Elem],C),
-     colonne2(C_Suiv,N1,Matrix),
-     %print("?"),
-     N is N1+1,
-     N>= 0,
-     print(N).
-
-colonne3b([],_,[]).
-colonne3b([E|C],Col,[L1|Rest]):-
+colonne([],_,[]).
+colonne([E|C],Col,[L1|Rest]):-
     nth1(Col,L1,E),
-    colonne3b(C,Col,Rest).
+    colonne(C,Col,Rest).
 
 
 
@@ -136,14 +116,17 @@ seconde_diag(K,[E|D],[Ligne|M]) :-
 possible([X|L], J) :- unifiable(X,J), possible(L,J).
 possible(  [],  _).
 
-	/* Attention 
+	/* Attention
 	il faut juste verifier le caractere unifiable
 	de chaque emplacement de la liste, mais il ne
 	faut pas realiser l'unification.
 	*/
 
-% A FAIRE 
-% unifiable(X,J) :- ? ? ? ? ?
+% A FAIRE
+ unifiable(X,J) :-
+    var(X),
+    !;
+    X=J.
 	
 	/* *********************************
 	 DEFINITION D'UN ALIGNEMENT GAGNANT
@@ -172,10 +155,12 @@ possible pour J qui n'a aucun element encore libre.
 
 % A FAIRE
 
-% alignement_gagnant(Ali, J) :- ? ? ? ?
-
-% alignement_perdant(Ali, J) :- ? ? ? ?
-
+alignement_gagnant(Ali, J) :-
+    ground(Ali),
+    possible(Ali,J).
+alignement_perdant(Ali, J) :-
+    ground(Ali),
+    \+possible(Ali,J).
 
 	/* ****************************
 	DEFINITION D'UN ETAT SUCCESSEUR
@@ -188,7 +173,13 @@ possible pour J qui n'a aucun element encore libre.
 	*/	
 
 % A FAIRE
-% successeur(J, Etat,[L,C]) :- ? ? ? ?  
+successeur(J, Etat,[L,C]) :-
+    nth1(L,Etat,Ligne),
+    nth1(C,Ligne, E),
+    var(E),
+    nth1(L,Etat,Ligne),
+    nth1(C,Ligne, J).
+
 
 	/* *************************************
    	 EVALUATION HEURISTIQUE D'UNE SITUATION
@@ -219,6 +210,9 @@ heuristique(J,Situation,H) :-		% cas 2
 % c-a-d si Situation n'est ni perdante ni gagnante.
 
 % A FAIRE 					cas 3
-% heuristique(J,Situation,H) :- ? ? ? ?
-
-
+heuristique(J,Situation,H) :-
+    findall([Alig],(alignement(Alig,Situation),possible(Alig,J)),PossibleJ),
+    findall([Alig],(alignement(Alig,Situation), adversaire(J,A), possible(Alig,A)), PossibleA),
+    length(PossibleJ, LJ),
+    length(PossibleA, LA),
+    H is LJ - LA.
