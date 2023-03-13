@@ -37,9 +37,16 @@
                   [a, f, d],       % 
                   [g,vide,e] ]).   % h1=4,   h2=5,   f*=5
 
-   initial_state2([ [a, b, c],       % C'EST L'EXEMPLE PRIS EN COURS
-                  [vide, h, d],       %
-                  [g,f,e] ]).   % h1=4,   h2=5,   f*=5
+   unit_1([ [a, b, c],
+                  [vide, h, d],
+                  [g,f,e] ]).
+   unit_2([ [vide, b, c],
+         [a, h, d],
+         [g,f,e] ]).
+
+   unit_3([ [b,vide, c],
+         [a, h, d],
+         [g,f,e] ]).
    % AUTRES EXEMPLES POUR LES TESTS DE  A*
 
    /*

@@ -22,11 +22,21 @@
 	par un nouvel identificateur).
 	*/
 
-situation_initiale([ [_,o,o],
-                     [o,_,o],
-                     [o,o,_] ]).
+situation_initiale([ [_,_,_],
+                     [_,_,_],
+                     [_,_,_] ]).
 
-	% Convention (arbitraire) : c'est x qui commence
+unit_1([ [x,x,o], % Test Unitaire 1 : Victoire en 1 coup
+        [x,o,o],
+        [_,_,_] ]).
+
+unit_2([ [x,_,o], % Test Unitaire 2 : Victoire en 2 coup
+        [_,_,_],
+        [_,_,_] ]).
+
+unit_3([[_,_,_],
+        [_,_,_],
+        [_,_,_]]).
 
 joueur_initial(x).
 
