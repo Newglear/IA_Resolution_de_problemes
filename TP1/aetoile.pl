@@ -6,18 +6,17 @@
 
 %*******************************************************************************
 
-main :-
-	initial_state2(Ini),
+main(U) :-
 	% Calcul de [F, H, G]
-	heuristique2(Ini,H0),
+	heuristique(U,H0),
 	G0 is 0,
 	F0 is H0 + G0,	
 	% initialisations Pf, Pu et Q
  	empty(Pf0),
  	empty(Pu0),
  	empty(Q),
-    insert([[F0,H0,G0],Ini],Pf0,Pf),
-    insert([Ini,[F0,H0,G0],nil,nil],Pu0,Pu),
+    insert([[F0,H0,G0],U],Pf0,Pf),
+    insert([U,[F0,H0,G0],nil,nil],Pu0,Pu),
 	% lancement de Aetoile
     aetoile(Pf,Pu,Q).
 
@@ -48,7 +47,7 @@ aetoile(Pf, Pu, Q) :-
     aetoile(Pf_Next,Pu_Next,Q_Next).
 
 expand([[_,_,Gu],Pere],Childs):-
-    findall([State,[F,H,G],Pere,Action],(rule(Action,Cout,Pere,State),heuristique2(State,H), G is Gu+Cout, F is H+G),Childs).
+    findall([State,[F,H,G],Pere,Action],(rule(Action,Cout,Pere,State),heuristique(State,H), G is Gu+Cout, F is H+G),Childs).
 
 loop_successors([],Pu,Pf,_,Pu,Pf).
 loop_successors([Child|Rest],Pf,Pu,Q,Pf_Suiv,Pu_Suiv):-

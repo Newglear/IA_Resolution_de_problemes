@@ -37,14 +37,14 @@
                   [a, f, d],       % 
                   [g,vide,e] ]).   % h1=4,   h2=5,   f*=5
 
-   unit_1([ [a, b, c],
+   unit([ [a, b, c],
                   [vide, h, d],
                   [g,f,e] ]).
-   unit_2([ [vide, b, c],
+   unit([ [vide, b, c],
          [a, h, d],
          [g,f,e] ]).
 
-   unit_3([ [b,vide, c],
+   unit([ [b,vide, c],
          [a, h, d],
          [g,f,e] ]).
    % AUTRES EXEMPLES POUR LES TESTS DE  A*
@@ -183,9 +183,9 @@
       % HEURISTIQUES
       %*************
       
-   %heuristique(U,H) :-
+   heuristique(U,H) :-
    %   heuristique1(U, H).  % au debut on utilise l'heuristique 1
-   %   heuristique2(U, H).  % ensuite utilisez plutot l'heuristique 2  
+      heuristique2(U, H).  % ensuite utilisez plutot l'heuristique 2
       
       
       %****************

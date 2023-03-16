@@ -26,15 +26,18 @@ situation_initiale([ [_,_,_],
                      [_,_,_],
                      [_,_,_] ]).
 
-unit_1([ [x,x,o], % Test Unitaire 1 : Victoire en 1 coup
+unit([ [_,_,_],
+                     [_,_,_],
+                     [_,_,_] ]).
+unit([ [x,x,o], % Test Unitaire 1 : Victoire en 1 coup
         [x,o,o],
         [_,_,_] ]).
 
-unit_2([ [x,_,o], % Test Unitaire 2 : Victoire en 2 coup
+unit([ [x,_,o], % Test Unitaire 2 : Victoire en 2 coup
         [_,_,_],
         [_,_,_] ]).
 
-unit_3([[_,_,_],
+unit([[_,_,_],
         [_,_,_],
         [_,_,_]]).
 

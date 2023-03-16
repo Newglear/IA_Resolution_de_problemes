@@ -146,10 +146,9 @@ meilleur([_|Reste],[Meilleur_Coup,Meilleur_Valeur]):-
   	PROGRAMME PRINCIPAL
   	****************** */
 
-main(B,V, Pmax) :-
+main(U,B,V, Pmax) :-
     joueur_initial(J),
-    situation_initiale(Ini),
-    negamax(J,Ini,0, Pmax,[B,V]).
+    negamax(J,U,0, Pmax,[B,V]).
 
 
 	/*
