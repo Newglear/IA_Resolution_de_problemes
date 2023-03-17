@@ -26,20 +26,22 @@ situation_initiale([ [_,_,_],
                      [_,_,_],
                      [_,_,_] ]).
 
-unit([ [_,_,_],
+
+
+unit1([ [_,_,_],
                      [_,_,_],
                      [_,_,_] ]).
-unit([ [x,x,o], % Test Unitaire 1 : Victoire en 1 coup
+unit2([ [x,x,o], % Test Unitaire 1 : Victoire en 1 coup
         [x,o,o],
         [_,_,_] ]).
 
-unit([ [x,_,o], % Test Unitaire 2 : Victoire en 2 coup
+unit3([ [x,_,o], % Test Unitaire 2 : Victoire en 2 coup
         [_,_,_],
         [_,_,_] ]).
 
-unit([[_,_,_],
-        [_,_,_],
-        [_,_,_]]).
+unit4([ [x,o,o], % Test Unitaire 2 : Victoire en 2 coup
+        [x,_,_],
+        [_,_,x] ]).
 
 joueur_initial(x).
 
@@ -230,3 +232,18 @@ heuristique(J,Situation,H) :-
     length(PossibleJ, LJ),
     length(PossibleA, LA),
     H is LJ - LA.
+
+test_heuristique :-
+    unit1(U1),
+    joueur_initial(J),
+    heuristique(J,U1,H1),
+    H1 = 0,
+    unit2(U2),
+    heuristique(J,U2,H2),
+    H2 = -1,
+    unit3(U3),
+    heuristique(J,U3,H3),
+    H3 = 0,
+    unit4(U4),
+    heuristique(J,U4,H4),
+    H4 = 2.

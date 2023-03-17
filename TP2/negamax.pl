@@ -6,6 +6,20 @@
 :- [tictactoe].
 
 
+tests_unitaires :-
+    unit1(U1),
+    main(U1,B1,V1,5),
+    B1 = [2,2],
+    V1 = 3,
+    unit2(U2),
+    main(U2,B2,V2,2),
+    B2 = [3,1],
+    V2 = 10000,
+    unit3(U3),
+    main(U3,B3,V3,3),
+    B3 = [3,1],
+    V3 = 2.
+
 	/* ***************************************************
   	ALGORITHME MINMAX avec convention NEGAMAX : negamax/5
   	**************************************************** */
@@ -57,9 +71,10 @@ A FAIRE : ECRIRE ici les clauses de negamax/5
 .....................................
 	*/
 
-negamax(J, Etat, Pmax, Pmax, [[], Val]):-
+
+negamax(J, Etat, Pmax, Pmax, [rien, Val]):-
     heuristique(J,Etat,Val), !.
-negamax(J, Etat, _, _, [[], Val]):-
+negamax(J, Etat, _, _, [rien, Val]):-
     successeurs(J,Etat,[]),
     print("Pas de succeseurs"),
     heuristique(J,Etat,Val),!.
@@ -147,7 +162,7 @@ meilleur([_|Reste],[Meilleur_Coup,Meilleur_Valeur]):-
 
 main(U,B,V, Pmax) :-
     joueur_initial(J),
-    negamax(J,U,1, Pmax,[B,V]).
+    negamax(J,U,0, Pmax,[B,V]).
 
 
 	/*
