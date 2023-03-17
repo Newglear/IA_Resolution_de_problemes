@@ -58,17 +58,16 @@ A FAIRE : ECRIRE ici les clauses de negamax/5
 	*/
 
 negamax(J, Etat, Pmax, Pmax, [[], Val]):-
-    %print("P = Pmax"),
     heuristique(J,Etat,Val), !.
 negamax(J, Etat, _, _, [[], Val]):-
     successeurs(J,Etat,[]),
     print("Pas de succeseurs"),
     heuristique(J,Etat,Val),!.
 negamax(J, Etat, P, Pmax, [Coup, V2]):-
-    print("ALED"),
     successeurs(J,Etat,Succs),
     %print(Succs),
     loop_negamax(J,P,Pmax,Succs,Val_Succs),
+    not(situation_terminale(J,Etat)),
     meilleur(Val_Succs,[Coup,V1]),
     V2 is -V1,!.
 
@@ -148,7 +147,7 @@ meilleur([_|Reste],[Meilleur_Coup,Meilleur_Valeur]):-
 
 main(U,B,V, Pmax) :-
     joueur_initial(J),
-    negamax(J,U,0, Pmax,[B,V]).
+    negamax(J,U,1, Pmax,[B,V]).
 
 
 	/*

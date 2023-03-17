@@ -172,8 +172,9 @@ alignement_gagnant(Ali, J) :-
     ground(Ali),
     possible(Ali,J).
 alignement_perdant(Ali, J) :-
+    adversaire(J,Adv),
     ground(Ali),
-    \+possible(Ali,J).
+    possible(Ali,Adv).
 
 	/* ****************************
 	DEFINITION D'UN ETAT SUCCESSEUR
@@ -188,10 +189,10 @@ alignement_perdant(Ali, J) :-
 % A FAIRE
 successeur(J, Etat,[L,C]) :-
     nth1(L,Etat,Ligne),
-    nth1(C,Ligne, E),
-    var(E),
-    nth1(L,Etat,Ligne),
-    nth1(C,Ligne, J).
+        nth1(C,Ligne,Elem),
+        ( var(Elem) ->
+            Elem=J
+        ).
 
 
 	/* *************************************

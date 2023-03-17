@@ -22,7 +22,6 @@
                         % -> permet de disposer du predicat sumlist(List, S)
                         % (qui sont predefinis en Swi-Prolog)
 
-                        
    %***************************
    %DESCRIPTION DU JEU DU TAKIN
    %***************************
@@ -31,12 +30,16 @@
       % ETAT INITIAL DU JEU
       %********************   
       % format :  initial_state(+State) ou State est une matrice (liste de listes)
-      
+
+   % h1=4,   h2=5,   f*=5
+
 
    initial_state([ [b, h, c],       % C'EST L'EXEMPLE PRIS EN COURS
                   [a, f, d],       % 
                   [g,vide,e] ]).   % h1=4,   h2=5,   f*=5
-
+   initial_test([ [a, b, c],       % C'EST L'EXEMPLE PRIS EN COURS
+                  [g, vide, d],       %
+                  [h,f,e] ]).   % h1=4,   h2=5,   f*=5
    unit([ [a, b, c],
                   [vide, h, d],
                   [g,f,e] ]).
